@@ -102,6 +102,10 @@ namespace Solution
             return string.Join(" ", sentence.Split(' ').Select(s => s.Length > 4 ? string.Concat(s.Reverse()) : s));
         }
 
-
+        public static string DuplicateEncode(string word)
+        {
+            word = word.ToLower();
+            return string.Concat(word.Select(c => word.Count(x => x == c) > 1 ? ')' : '('));
+        }
     }
 }

@@ -134,5 +134,24 @@ namespace Solution
                 0 :
                 Enumerable.Range(1, value - 1).Where(n => n % 3 == 0 || n % 5 == 0).Sum();
         }
+
+        public static int NbYear(int p0, double percent, int aug, int p)
+        {
+            int year = 0;
+            int currentNb = p0;
+            while (currentNb < p)
+            {
+                currentNb += (int)Math.Floor(currentNb * percent * 0.01 + aug);
+
+                year++;
+            }
+
+            return year;
+        }
+
+        public static string game(long n)
+        {
+            return n * n % 2 == 0 ? $"[{n * n / 2}]" : $"[{n * n}, 2]";
+        }
     }
 }
