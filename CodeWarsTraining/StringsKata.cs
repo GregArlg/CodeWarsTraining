@@ -107,5 +107,11 @@ namespace Solution
             word = word.ToLower();
             return string.Concat(word.Select(c => word.Count(x => x == c) > 1 ? ')' : '('));
         }
+
+        public static string HighAndLow(string numbers)
+        {
+            var array = numbers.Split(' ').Select(int.Parse);
+            return array.Max() + " " + array.Min();
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Solution
@@ -152,6 +153,47 @@ namespace Solution
         public static string game(long n)
         {
             return n * n % 2 == 0 ? $"[{n * n / 2}]" : $"[{n * n}, 2]";
+        }
+
+        public static List<int> getVisibleProfilesCount(int connection_nodes, List<int> connection_from, List<int> connection_to, List<int> queries)
+        {
+            List<int> res = new List<int>();
+
+            queries.ForEach(query =>
+            {
+                List<int> tree = new List<int>();
+                LoopTree(tree, query);
+                res.Add(tree.Count);
+            });
+
+            return res;
+
+            void LoopTree(List<int> deps, int from)
+            {
+                deps.Add(from);
+                var fromList = connection_from.Contains(from) ? connection_from : connection_to.Contains(from) ? connection_to : null;
+                if (fromList != null)
+                {
+                    var toList = fromList == connection_from ? connection_to : connection_from;
+
+                    int to = toList[fromList.IndexOf(from)];
+                    if (fromList.Contains(to))
+                    {
+                        LoopTree(deps, to);
+                    }
+                    else
+                    {
+                        deps.Add(to);
+                    }
+                }
+            }
+        }
+
+        public static int DigitalRoot(long n)
+        {
+            int sum = n.ToString().Select(c => (int)char.GetNumericValue(c)).Sum();
+
+            return sum < 10 ? sum : DigitalRoot(sum);
         }
     }
 }
